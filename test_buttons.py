@@ -8,22 +8,19 @@ SIZE = (640, 640)
 SIYAH = (0, 0, 0)
 BEYAZ = (255, 255, 255)
 YESIL = (0, 255, 0)
-KIRMIZI = (255, 0, 0)
-MAVI = (0, 0, 255)
 
-CURRENT_COLOR = BEYAZ
-TITLE = "test pythonu"
+CURRENT_COLOR = SIYAH
 
 screen = pygame.display.set_mode(SIZE)
-
-pygame.display.set_caption(TITLE)
 
 
 from cacapi.modules import Button
 
-b_Test = Button(320, 320, color = YESIL, size= (125, 125), screen=screen)
+b_siyah= Button(160, 480, color = YESIL, size= (125, 50), screen=screen)
+b_beyaz = Button(480, 480, color = YESIL, size = (125, 50), screen= screen)
 
-b_Test.set_Text('aaaaaaaaaaaaaaaaa', 24)
+b_siyah.set_Text('Turn Black', 22, BEYAZ)
+b_beyaz.set_Text('Turn White', 22, BEYAZ)
 
 while 1:
     for event in pygame.event.get():
@@ -35,15 +32,14 @@ while 1:
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             m_pos = pygame.mouse.get_pos()
-
-            # print(f'Mouse pos ==> { m_pos } ')
             
-            if b_Test.isClicked(m_pos):
-                
-                pass
+            if b_siyah.isClicked(m_pos): CURRENT_COLOR = SIYAH
+
+            if b_beyaz.isClicked(m_pos): CURRENT_COLOR = BEYAZ
 
     screen.fill(CURRENT_COLOR)
 
-    b_Test.Show()
+    b_siyah.Show()
+    b_beyaz.Show()
     
     pygame.display.update() # Ekranı yeniliyor
