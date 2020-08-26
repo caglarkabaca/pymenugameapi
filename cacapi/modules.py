@@ -3,6 +3,7 @@ Butonlar falan buradan çağrılacak
 """
 
 import pygame
+import cacapi.conf as conf
 
 class Button:
 
@@ -29,3 +30,13 @@ class Button:
 
         # pygame.draw.circle(self.screen, (180, 0, 0), self.center, radius = 5) # Test için lazımdı
 
+    def isClicked(self, m_pos):
+
+        p_list = conf.get_plist(self)
+
+        if m_pos in p_list:
+            # print('Button clicked !!') # for debug
+            return True
+
+        return False
+        
