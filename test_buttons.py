@@ -30,12 +30,10 @@ while 1:
             break
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-
-            m_pos = pygame.mouse.get_pos()
             
-            if b_siyah.isClicked(m_pos): CURRENT_COLOR = SIYAH
+            if b_siyah.isClicked(): CURRENT_COLOR = SIYAH
 
-            if b_beyaz.isClicked(m_pos): CURRENT_COLOR = BEYAZ
+            if b_beyaz.isClicked(): CURRENT_COLOR = BEYAZ
 
     screen.fill(CURRENT_COLOR)
 
