@@ -10,6 +10,11 @@ BEYAZ = (255, 255, 255)
 
 screen = pygame.display.set_mode(SIZE)
 
+
+from cacapi.modules import Button
+
+
+
 while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -18,5 +23,5 @@ while 1:
             break
 
     screen.fill(SIYAH)
-
+    
     pygame.display.flip() # Ekranı yeniliyor
