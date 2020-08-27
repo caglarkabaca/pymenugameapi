@@ -1,16 +1,36 @@
 """
-Butonlar falan buradan çağrılacak
+modules.py
+
+Asıl olay burada dönüyor
+Burada bütün classlar depolanıyor
+
 """
 
 import pygame, time
 import cacapi.conf as conf
 
+
+"""
+Button
+
+Buton işte tıklanabilir kare şeklinde veya daire şeklinde olabilir
+içine yazı yazılabilir
+
+"""
 class Button:
 
     """
-    Button
-        kare veya daire şeklinde düğmeler
-        bastığında anlar
+    __init__
+
+    param:
+        x => kordinat x i
+        y => kordinat y si
+        color => tuple > rgb renk
+        size => tuple > boyutlar (genişlik, yükseklik)
+        screen => ZORUNLU OLMAZSA ÇALIŞMAZ > pygame.display.set_mode ile geri dönen
+
+    return:
+        Button object
     """
 
     def __init__(self, x, y, color = (255, 255, 255), size = (100, 100), screen = None):
@@ -35,12 +55,32 @@ class Button:
 
             self.screen = screen
 
+
+    """
+    set_Text
+
+    param:
+        txt => değişecek yazı
+        t_size => yazının boyutu
+        color => tuple > rgb renk
+    """
     def set_Text(self, txt, t_size, color = (0, 0, 0)):
 
         font = pygame.font.Font('freesansbold.ttf', t_size)
         self.text = font.render(txt, True,  color)
         self.text_len , self.text_hei = font.size(txt)
 
+    """
+    set_Type
+
+    param:
+        typ => tip
+    
+    desc :
+        rectangle => kare
+        circle => daire
+        bu ikisinden biri olmalı
+    """
     def set_Type(self, typ):
 
         possible_var = ['rectangle', 'circle']
@@ -52,7 +92,12 @@ class Button:
 
             print(f' {typ} is not correct button type ! ')
 
+    """
+    Show
 
+    desc: ekrana çizer döngünün içinde olmalı
+
+    """
     def Show(self):
 
         if self.type == 'rectangle':
@@ -68,6 +113,20 @@ class Button:
 
         # pygame.draw.circle(self.screen, (180, 0, 0), self.center, radius = 5) # Test için lazımdı
 
+    """
+    isClicked
+
+    desc: tıklanıp tıklanmadıgını söyler
+    return : bool
+
+    note:
+
+        if event.type == pygame.MOUSEBUTTONDOWN: veya MOUSEBUTTONUP
+
+        içinde olmalı yoksa hata verebilir
+
+    """
+
     def isClicked(self):
 
         m_pos = pygame.mouse.get_pos()
@@ -82,11 +141,6 @@ class Button:
 
 class Text:
 
-    """
-    Text
-        yazı yazdırmanı sağlıyor
-
-    """
 
     def __init__(self, text, pos = (0, 0),color = (0, 0, 0), size = 18, font = 'freesansbold.ttf', screen = None):
         
@@ -215,5 +269,13 @@ class Color_Pallette:
 
         return self.colors[color]
 
+
+class Editor_Mode:
+"""
+Editör mod eklemeyi çok istiyorum fakat şuan tam olarak nasıl yapmam gerektiğini bilmiyorum
+Biraz araştırıp ve mantığı oturtup yapıcam
+Kodun da sade olmasını istiyorum ki ileride baktığımda ben naptım demiyim
+"""
+    pass
 
 

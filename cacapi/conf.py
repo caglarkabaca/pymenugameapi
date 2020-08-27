@@ -1,10 +1,25 @@
 """
-Tıklanma algılama mekanizmaları falan burada olucak
+conf.py
 
-Burası arka planda çalışıcak
+Bazı matematik işlemlerini yapıcağım kod dosyası
+başka bir işlevi yok
+
 """
 
 
+"""
+possibleCoordinates
+desc : butona tıklama sırasında olabilecek kordinatları hesaplar
+
+param :
+    x => butonun x konumu
+    y => butonun y konumu
+    s_x => butonun genişliği
+    s_y => butonun yüksekliği
+
+return : olabilecek tüm kordinatları LIST şeklinde döndür
+
+"""
 def possibleCoordinates(x, y, s_x, s_y):
 
     p_x = [x for x in range(x - s_x, x + s_x + 1)]
@@ -21,6 +36,17 @@ def possibleCoordinates(x, y, s_x, s_y):
 
     return p_list
 
+
+"""
+get_plist
+desc : asıl possiblecoordinates bu burası front kısmı
+
+param :
+    obj => herhangi bir obje tıklanılacak olan
+
+return : olabilecek tüm kordinatları LIST şeklinde döndür
+
+"""
 def get_plist(obj):
 
     x, y = int(obj.center[0]), int(obj.center[1])
