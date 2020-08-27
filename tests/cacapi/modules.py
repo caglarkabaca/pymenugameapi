@@ -7,7 +7,6 @@ Burada bütün classlar depolanıyor
 """
 
 import pygame, time
-from pygame.locals import *
 import cacapi.conf as conf
 
 
@@ -36,10 +35,13 @@ class Button:
 
     def __init__(self, x, y, color = (255, 255, 255), size = (100, 100), screen = None):
 
+        self.coordinate = (x - (size[0]/2) , y - (size[1]/2) )
         self.center = (x, y)
-        self.coordinate = (self.center[0] - (size[0]/2) , self.center[1] - (size[1]/2) )
         self.color = color
         self.size = size
+
+        self.rect = pygame.Rect(self.coordinate[0], self.coordinate[1],
+            self.size[0], self.size[1])
 
         self.text = None 
 
@@ -97,11 +99,6 @@ class Button:
 
     """
     def Show(self):
-        
-        self.coordinate = (self.center[0] - (self.size[0]/2) , self.center[1] - (self.size[1]/2) )
-
-        self.rect = pygame.Rect(self.coordinate[0], self.coordinate[1],
-            self.size[0], self.size[1])
 
         if self.type == 'rectangle':
             pygame.draw.rect(self.screen, self.color, self.rect, border_radius = 2)
@@ -141,13 +138,6 @@ class Button:
             return True
 
         return False
-    """
-    param:
-        size => tuple > (x, y)
-    """
-    def set_Size(self, size):
-        if size[0] > 0 and size[1] > 0:
-            self.size = size
 
 class Text:
 
@@ -203,10 +193,6 @@ class InputBox:
 
     def Show(self):
 
-        self.coordinates = (self.center[0] - self.size[0]/2 , self.center[1] - self.size[1]/2)
-        self.rect = pygame.Rect(self.coordinates[0], self.coordinates[1],
-            self.size[0], self.size[1])
-
         #Box
         if self.type == 'static':
             pygame.draw.rect(self.screen, self.color, self.rect, border_radius = 2)
@@ -226,18 +212,12 @@ class InputBox:
                 pygame.draw.rect(self.screen, (0, 0, 0), cursor)
 
         #text
-
-        self.text_body.center = self.center
         self.text_body.Show()
     
     def set_Text(self, txt):
 
         self.text = txt
         self.text_body = Text(self.text, pos=self.center, screen=self.screen)
-
-    def set_Size(self, size):
-        if size[0] > 0 and size[1] > 0:
-            self.size = size
 
     def set_Type(self, tip):
 
@@ -266,10 +246,8 @@ class InputBox:
         if m_pos in p_list:
             # print('Button clicked !!') # for debug
             self.is_Writable = True
-            return True
         else:
             self.is_Writable = False
-            return False
 
 
 class Color_Pallette:
@@ -296,133 +274,9 @@ class Color_Pallette:
 Editör mod eklemeyi çok istiyorum fakat şuan tam olarak nasıl yapmam gerektiğini bilmiyorum
 Biraz araştırıp ve mantığı oturtup yapıcam
 Kodun da sade olmasını istiyorum ki ileride baktığımda ben naptım demiyim
-
-
-mouse ile yeri değişiyor
-yukarı ok tuşu yükselkiği artırıyor aşağı azaltıyor
-sag ok tuşu uzatıyor sol kısaltıyor
-
-i hizlandiriyor
-d yavaslatıyor
-
 """
 class Editor_Mode:
-    
-    def __init__(self, key, screen = None):
 
-        self.key = key
-
-        self.open = False
-
-        if screen is None:
-
-            print('Screen not defined')
-
-        self.screen = screen
-
-        self.obj = None
-
-        self.locked = False
-
-        self.speed = 1
-
-    def check(self, event):
-
-        if event.unicode == self.key:
-
-            self.open = not(self.open)
-
-            if not self.open:
-
-                self.obj = None
-                self.locked = False
-
-        if self.obj is not None and event.unicode == 'l':
-
-            self.locked = not(self.locked)
-
-        if self.obj is not None:
-            size = self.obj.size
-
-            if event.key == pygame.K_RIGHT :
-                self.obj.set_Size((size[0] + self.speed, size[1]))
-            elif event.key == pygame.K_LEFT :
-                self.obj.set_Size((size[0] - self.speed, size[1]))
-            elif event.key == pygame.K_UP :
-                self.obj.set_Size((size[0], size[1] + self.speed))
-            elif event.key == pygame.K_DOWN :
-                self.obj.set_Size((size[0], size[1] - self.speed))
-
-        if self.open:
-            if event.unicode == 'i':
-
-                self.speed = self.speed + 1
-            if event.unicode == 'd':
-
-                if self.speed - 1 > 0:
-                    self.speed = self.speed - 1
+    pass
 
 
-    def drag(self, obj):
-
-        if self.open:
-            self.obj = obj
-
-    def drop(self):
-
-        if not self.locked and self.obj is not None:
-            self.write_Status()
-            self.obj = None
-
-    def Show(self):
-
-        if self.open:
-
-            editor_text = Text('EDITOR MODE speed : ' + str(self.speed), (100,10), color = (255, 255, 255), size = 14, screen=self.screen)
-
-            editor_text.Show()
-
-        if self.obj is not None:
-
-            m_pos = pygame.mouse.get_pos()
-            self.obj.center = m_pos
-
-    def write_Status(self):
-
-        status = f"""
-        last changes
-        obje tipi => { type(self.obj) },
-        obje center => { self.obj.center },
-        obje size => { self.obj.size }
-        ---------
-        """
-
-        print(status)
-
-    """
-    objeleri dosyaya kaydeter
-    """
-    def save_Status(self, obj_list):
-        index = 0
-        import datetime
-        with open(str(datetime.datetime.now()), 'a') as f:
-
-            for obj in obj_list:
-
-                status = f"""
-                {  index }
-                obje tipi => { type(obj) },
-                obje center => { obj.center },
-                obje size => { obj.size }
-                ---------
-                """
-                index = index + 1
-                f.write(status)
-
-        self.open = False
-        self.obj = None
-        self.locked = False
-
-
-
-            

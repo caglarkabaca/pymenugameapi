@@ -1,65 +1,52 @@
 import pygame
 from pygame.locals import *
+
 pygame.init()
 
-SIZE = (640, 640)
+SCREEN = pygame.display.set_mode((640, 640))
+pygame.display.set_caption('Test')
 
-# RENKLER
+import cacapi.modules as cacapi
 
-SIYAH = (0, 0, 0)
-BEYAZ = (255, 255, 255)
-YESIL = (0, 255, 0)
-KIRMIZI = (255, 0, 0)
-MAVI = (0, 0, 255)
+editor = cacapi.Editor_Mode('o', screen=SCREEN)
 
-CURRENT_COLOR = SIYAH
-TITLE = "test pythonu"
-
-screen = pygame.display.set_mode(SIZE)
-
-pygame.display.set_caption(TITLE)
-
-
-from cacapi.modules import Button, Text, Color_Pallette, InputBox
-
-i = InputBox((160,320),size=(125,25),screen=screen)
-i.set_Text('i')
-
-u = InputBox((480,160), size=(125,25), screen=screen)
-u.set_Text('u')
-
+d_Button = cacapi.Button(160, 160, screen=SCREEN)
+d_InputBox = cacapi.InputBox((320, 320), screen=SCREEN)
+d_InputBox.set_Type('dynamic')
+d_Text = cacapi.Text('Test', color = (255, 255, 255), screen=SCREEN, pos=(480, 480))
 
 while 1:
+
     for event in pygame.event.get():
 
-        if event.type == pygame.QUIT:
-            print('Exiting.. ')
-            exit()
-            break
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            i.listen_clicks()
-            u.listen_clicks()
+        if event.type == pygame.QUIT: exit()
 
         if event.type == pygame.KEYDOWN:
 
-            if event.key == K_UP:
+            editor.check(event)
+            d_InputBox.listen_text(event)
 
-                i.is_Writable = True
-
-            if event.key == K_DOWN:
-
-                i.is_Writable = False
-
-            i.listen_text(event)
-            u.listen_text(event)
-
-            
+            if event.key == pygame.K_s and editor.open :
+                
+                import time
+                editor.save_Status((d_Button, d_InputBox))
+                time.sleep(1)
+                print('saved')
 
 
-    screen.fill(CURRENT_COLOR)
+        if event.type == pygame.MOUSEBUTTONUP:
+            editor.drop()
 
-    i.Show()
-    u.Show()
+        if event.type == pygame.MOUSEBUTTONDOWN:
 
-    pygame.display.update() # Ekranı yeniliyor
+            if d_Button.isClicked(): editor.drag(d_Button)
+            if d_InputBox.listen_clicks(): editor.drag(d_InputBox)
+
+    SCREEN.fill((0, 0, 0))    
+    editor.Show()
+
+    d_Button.Show()
+    d_InputBox.Show()
+    d_Text.Show()
+
+    pygame.display.update()
