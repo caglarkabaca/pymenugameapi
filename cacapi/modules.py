@@ -100,6 +100,27 @@ class Text:
 
         self.screen.blit(self.text, (self.center[0] - self.text_len/2, self.center[1] - self.text_hei/2))
 
+class InputBox:
+
+    def __init__(self, pos = (0, 0), size = (50, 25), color = (255, 255, 255),
+    color_text = (0, 0, 0), screen = None):
+
+        self.screen = screen
+        self.center = pos
+        self.coordinates = (pos[0] - size[0]/2 , pos[1] - size[1]/2)
+        self.color = color
+        self.color_text = color_text 
+        self.size = size
+        self.debug_text = Text("test", pos=self.center, screen=self.screen)
+
+
+    def Show(self):
+
+        #Box
+        pygame.draw.rect(self.screen, self.color, (self.coordinates[0], self.coordinates[1],
+        self.size[0], self.size[1]), border_radius = 2)
+        #Debug text
+        self.debug_text.Show()
 
 class Color_Pallette:
 

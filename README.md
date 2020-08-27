@@ -4,4 +4,4 @@
 
 Gerekli libraryler
 
-- pygame
+- pygame 2.0.0.dev8
