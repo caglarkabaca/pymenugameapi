@@ -22,8 +22,11 @@ pygame.display.set_caption(TITLE)
 
 from cacapi.modules import Button, Text, Color_Pallette, InputBox
 
-i = InputBox((320,320),size=(125,25),screen=screen)
-i.set_Text('text')
+i = InputBox((160,320),size=(125,25),screen=screen)
+i.set_Text('i')
+
+u = InputBox((480,160), size=(125,25), screen=screen)
+u.set_Text('u')
 
 
 while 1:
@@ -36,6 +39,7 @@ while 1:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             i.listen_clicks()
+            u.listen_clicks()
 
         if event.type == pygame.KEYDOWN:
 
@@ -48,6 +52,7 @@ while 1:
                 i.is_Writable = False
 
             i.listen_text(event)
+            u.listen_text(event)
 
             
 
@@ -55,5 +60,6 @@ while 1:
     screen.fill(CURRENT_COLOR)
 
     i.Show()
+    u.Show()
 
     pygame.display.update() # Ekranı yeniliyor

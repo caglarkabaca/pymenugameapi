@@ -20,6 +20,9 @@ class Button:
         self.color = color
         self.size = size
 
+        self.rect = pygame.Rect(self.coordinate[0], self.coordinate[1],
+            self.size[0], self.size[1])
+
         self.text = None 
 
         self.type = 'rectangle'
@@ -53,8 +56,7 @@ class Button:
     def Show(self):
 
         if self.type == 'rectangle':
-            pygame.draw.rect(self.screen, self.color, (self.coordinate[0], self.coordinate[1],
-            self.size[0], self.size[1]), border_radius = 2)
+            pygame.draw.rect(self.screen, self.color, self.rect, border_radius = 2)
         elif self.type == 'circle':
             pygame.draw.circle(self.screen, self.color, self.center, radius = self.size[0]/2 )
 
@@ -88,6 +90,10 @@ class Text:
 
     def __init__(self, text, pos = (0, 0),color = (0, 0, 0), size = 18, font = 'freesansbold.ttf', screen = None):
         
+        self.size = size
+        self.font = font 
+        self.color = color
+
         font = pygame.font.Font(font, size)
         self.text = font.render(text, True, color)
         self.text_len, self.text_hei = font.size(text)
@@ -95,6 +101,13 @@ class Text:
         self.center = pos
 
         self.screen = screen
+
+    def set_Text(self, txt):
+
+        font = pygame.font.Font(self.font, self.size)
+        self.text = font.render(txt, True, self.color)
+        self.text_len, self.text_hei = font.size(txt)
+
 
     def Show(self):
 
@@ -117,6 +130,9 @@ class InputBox:
 
         self.type = "static"
 
+        self.rect = pygame.Rect(self.coordinates[0], self.coordinates[1],
+            self.size[0], self.size[1])
+
         self.is_Writable = False
 
 
@@ -125,8 +141,7 @@ class InputBox:
 
         #Box
         if self.type == 'static':
-            pygame.draw.rect(self.screen, self.color, (self.coordinates[0], self.coordinates[1],
-            self.size[0], self.size[1]), border_radius = 2)
+            pygame.draw.rect(self.screen, self.color, self.rect, border_radius = 2)
 
         if self.type == 'dynamic':
             size_0 = self.text_body.text_len + 10
@@ -199,3 +214,6 @@ class Color_Pallette:
     def get_Color(self, color):
 
         return self.colors[color]
+
+
+
