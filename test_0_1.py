@@ -15,6 +15,7 @@ palet = Color_Pallette(
     }
 )
 
+
 b_rect = Button(200,100, color = palet.get_Color('orta'), size = (200, 50), screen = screen)
 b_rect.set_Text('Kare düğme',18, (255, 255, 255))
 

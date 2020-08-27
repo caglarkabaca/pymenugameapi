@@ -2,7 +2,7 @@
 Butonlar falan buradan çağrılacak
 """
 
-import pygame
+import pygame, time
 import cacapi.conf as conf
 
 class Button:
@@ -111,16 +111,75 @@ class InputBox:
         self.color = color
         self.color_text = color_text 
         self.size = size
-        self.debug_text = Text("test", pos=self.center, screen=self.screen)
+
+        self.text = ""
+        self.text_body = Text(self.text, pos=self.center, screen=self.screen)
+
+        self.type = "static"
+
+        self.is_Writable = False
+
 
 
     def Show(self):
 
         #Box
-        pygame.draw.rect(self.screen, self.color, (self.coordinates[0], self.coordinates[1],
-        self.size[0], self.size[1]), border_radius = 2)
-        #Debug text
-        self.debug_text.Show()
+        if self.type == 'static':
+            pygame.draw.rect(self.screen, self.color, (self.coordinates[0], self.coordinates[1],
+            self.size[0], self.size[1]), border_radius = 2)
+
+        if self.type == 'dynamic':
+            size_0 = self.text_body.text_len + 10
+            coordinates_0 = self.center[0] - size_0/2
+            pygame.draw.rect(self.screen, self.color, (coordinates_0, self.coordinates[1],
+            size_0, self.size[1]), border_radius = 2)
+
+        # dot animation
+
+        if self.is_Writable:
+
+            if time.time() % 1 > 0.5:
+                cursor = pygame.Rect(self.center[0] + self.text_body.text_len/2, self.center[1] - self.text_body.text_hei/2, 1, self.text_body.text_hei)
+                pygame.draw.rect(self.screen, (0, 0, 0), cursor)
+
+        #text
+        self.text_body.Show()
+    
+    def set_Text(self, txt):
+
+        self.text = txt
+        self.text_body = Text(self.text, pos=self.center, screen=self.screen)
+
+    def set_Type(self, tip):
+
+        possible_var = ('dynamic','static')
+        if tip in possible_var:
+            self.type = tip
+        else:
+            print('Wrong type for input !')
+
+    def listen_text(self, event):
+
+        if self.is_Writable:
+
+            if event.key == pygame.locals.K_BACKSPACE:
+
+                if len(self.text) > 0:
+                    self.set_Text(self.text[:-1])
+
+            self.set_Text(self.text + event.unicode)
+
+    def listen_clicks(self):
+
+        m_pos = pygame.mouse.get_pos()
+        p_list = conf.get_plist(self)
+
+        if m_pos in p_list:
+            # print('Button clicked !!') # for debug
+            self.is_Writable = True
+        else:
+            self.is_Writable = False
+
 
 class Color_Pallette:
 
