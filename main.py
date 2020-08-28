@@ -8,7 +8,7 @@ pygame.display.set_caption('Test')
 
 import cacapi.modules as cacapi
 
-editor = cacapi.Editor_Mode('o', screen=SCREEN)
+editor = cacapi.Editor_Mode(pygame.locals.K_F1, screen=SCREEN)
 
 d_Button = cacapi.Button(160, 160, screen=SCREEN)
 d_InputBox = cacapi.InputBox((320, 320), screen=SCREEN)
@@ -41,6 +41,7 @@ while 1:
 
             if d_Button.isClicked(): editor.drag(d_Button)
             if d_InputBox.listen_clicks(): editor.drag(d_InputBox)
+            if d_Text.isClicked(): editor.drag(d_Text)
 
     SCREEN.fill((0, 0, 0))    
     editor.Show()

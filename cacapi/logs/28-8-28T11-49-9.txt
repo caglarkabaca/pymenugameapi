@@ -1,0 +1,13 @@
+
+                0
+                obje tipi => <class 'cacapi.modules.Button'>,
+                obje center => (160, 160),
+                obje size => (100, 100)
+                ---------
+                
+                1
+                obje tipi => <class 'cacapi.modules.InputBox'>,
+                obje center => (320, 320),
+                obje size => (50, 25)
+                ---------
+                
