@@ -1,0 +1,43 @@
+
+                0
+                obje tipi => <class 'cacapi.modules.Text'>,
+                obje center => (307, 31),
+                obje size => (329, 30)
+                ---------
+                
+                1
+                obje tipi => <class 'cacapi.modules.Text'>,
+                obje center => (72, 65),
+                obje size => (124, 18)
+                ---------
+                
+                2
+                obje tipi => <class 'cacapi.modules.InputBox'>,
+                obje center => (228, 68),
+                obje size => (180, 30)
+                ---------
+                
+                3
+                obje tipi => <class 'cacapi.modules.Text'>,
+                obje center => (106, 113),
+                obje size => (58, 19)
+                ---------
+                
+                4
+                obje tipi => <class 'cacapi.modules.InputBox'>,
+                obje center => (227, 116),
+                obje size => (180, 30)
+                ---------
+                
+                5
+                obje tipi => <class 'cacapi.modules.Button'>,
+                obje center => (172, 189),
+                obje size => (329, 75)
+                ---------
+                
+                6
+                obje tipi => <class 'cacapi.modules.Text'>,
+                obje center => (240, 280),
+                obje size => (0, 24)
+                ---------
+                
